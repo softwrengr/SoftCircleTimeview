@@ -1,4 +1,4 @@
-package com.softwr.softcircletimeview;
+package com.softwr.circletimeview;
 
 import android.content.Context;
 

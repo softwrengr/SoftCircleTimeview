@@ -1,14 +1,11 @@
-package com.softwr.SoftTimeView;
+package com.softwr.softtimeview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 
 public class ClockView extends View {

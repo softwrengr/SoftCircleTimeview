@@ -1,4 +1,4 @@
-package com.softwr.SoftTimeView;
+package com.softwr.softtimeview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -341,7 +341,6 @@ public class CircularSliderView extends View {
     private void updateSliderState(int touchX, int touchY, Thumb thumb) {
         int distanceX = touchX - mCircleCenterX;
         int distanceY = mCircleCenterY - touchY;
-        //noinspection SuspiciousNameCombination
         double c = Math.sqrt(Math.pow(distanceX, 2) + Math.pow(distanceY, 2));
         double angle = Math.acos(distanceX / c);
         if (distanceY < 0)
@@ -407,7 +406,6 @@ public class CircularSliderView extends View {
     }
 
     @Override
-    @SuppressWarnings("NullableProblems")
     public boolean onTouchEvent(MotionEvent ev) {
 
         switch (ev.getAction()) {

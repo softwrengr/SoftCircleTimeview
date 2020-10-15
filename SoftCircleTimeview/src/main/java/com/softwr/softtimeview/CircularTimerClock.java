@@ -1,4 +1,4 @@
-package com.softwr.SoftTimeView;
+package com.softwr.softtimeview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
