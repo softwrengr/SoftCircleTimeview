@@ -3,9 +3,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:timer="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
 
+    <com.softwr.softtimeview.CircularTimerClock
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/circular_clock"
+        android:layout_gravity="center"
+        android:padding="20dp"
+        timer:arc_dash_size="30dp"
+        timer:start_hour="5"
+        timer:start_minutes="20"
+        timer:end_hour="9"
+        timer:end_minutes="30"
+        timer:clock_time_interval="5"
+        timer:clock_tick_interval="15"
+        timer:clock_hour_color="#0ac2d8"
+        timer:clock_tick_color="#0ac2d8"
+        timer:hours_size="18sp"
+        timer:start_time_is_am="true"
+        timer:end_time_is_am="false"
+        timer:is_clock_inside="true"
+        timer:border_thickness="30dp"
+        timer:border_color="#03A0B9"
+        timer:arc_gradient_color_start="#0ac2d8"
+        timer:arc_gradient_color_end="#000000"
+        timer:start_thumb_image="@drawable/circle_toggle_shape"
+        timer:end_thumb_image="@drawable/circle_toggle_shape"
+        timer:thumb_size="35dp" >
 
+    </com.softwr.softtimeview.CircularTimerClock>
 </LinearLayout>
