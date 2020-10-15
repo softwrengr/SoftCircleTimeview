@@ -1,0 +1,3 @@
+include ':SoftCircleTimeview'
+include ':app'
+rootProject.name = "SoftCircleTimeview"
