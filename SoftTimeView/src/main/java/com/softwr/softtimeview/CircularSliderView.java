@@ -32,6 +32,8 @@ public class CircularSliderView extends View {
     private int largestCenteredSquareRight;
     private int largestCenteredSquareBottom;
 
+
+
     public void setBackgroundImage(Drawable backgroundImage) {
         this.backgoundImage = backgroundImage;
     }
@@ -118,17 +120,16 @@ public class CircularSliderView extends View {
         START, END
     }
 
-    public CircularSliderView(Context context) {
-        this(context, null);
+    int start , end;
 
-    }
+//    public CircularSliderView(Context context, AttributeSet attrs) {
+//        this(context, attrs, 0);
+//    }
 
-    public CircularSliderView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public CircularSliderView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    public CircularSliderView(Context context, AttributeSet attrs, int defStyleAttr, int start, int end) {
+        super(context, attrs, 0);
+        this.start = start;
+        this.end = end;
         init(context, attrs, defStyleAttr);
     }
 
@@ -157,8 +158,8 @@ public class CircularSliderView extends View {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircularSlider, defStyleAttr, 0);
 
         // read all available attributes
-        int startHour = a.getInteger(R.styleable.CircularSlider_start_hour, 0);
-        int endHour = a.getInteger(R.styleable.CircularSlider_end_hour, 0);
+        int startHour = a.getInteger(R.styleable.CircularSlider_start_hour, start);
+        int endHour = a.getInteger(R.styleable.CircularSlider_end_hour, end);
         float startMinutes = a.getFloat(R.styleable.CircularSlider_start_minutes, 0);
         float endMinutes = a.getFloat(R.styleable.CircularSlider_end_minutes, 0);
         int thumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_thumb_size, 50);

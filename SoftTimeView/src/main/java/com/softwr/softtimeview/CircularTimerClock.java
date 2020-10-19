@@ -43,6 +43,10 @@ public class CircularTimerClock extends FrameLayout {
     private int endHour;
     private ontTimeChanged ontTimeChangedListener;
 
+    Context context;
+    AttributeSet attrs;
+    int defStyleAttr;
+
     public CircularTimerClock(@NonNull Context context) {
         this(context, null);
     }
@@ -53,22 +57,35 @@ public class CircularTimerClock extends FrameLayout {
 
     public CircularTimerClock(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs, defStyleAttr);
+
+        this.context = context;
+        this.attrs = attrs;
+        this.defStyleAttr = defStyleAttr;
+
     }
 
 
-    private void init(Context context, final AttributeSet attrs, final int defStyleAttr) {
+    public void init(int start, int end) {
+
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircularSlider, defStyleAttr, 0);
         isStartTImeAM = a.getBoolean(R.styleable.CircularSlider_start_time_is_am,true);
         isEndTimeAM = a.getBoolean(R.styleable.CircularSlider_end_time_is_am,true);
         isClockInside = a.getBoolean(R.styleable.CircularSlider_is_clock_inside,true);
         interval = a.getInteger(R.styleable.CircularSlider_clock_time_interval,INTERVAL_1M);
         a.recycle();
+
         View layout = LayoutInflater.from(getContext()).inflate(R.layout.circular_timer_clock_layout, this);
         circularSliderWrapper = layout.findViewById(R.id.circular_slider_wrapper);
-        circularSliderView = new CircularSliderView(getContext(), attrs, defStyleAttr);
+
+
+        circularSliderView = new CircularSliderView(getContext(), attrs, defStyleAttr,start,end);
         circularSliderWrapper.addView(circularSliderView);
+
         clockView = new ClockView(getContext(), attrs, defStyleAttr);
+
+        circularSliderView.setStartTimeAM(isStartTImeAM);
+        circularSliderView.setEndTimeAM(isEndTimeAM);
+        circularSliderView.updateSliderState(circularSliderView.getStartThumbAngle(), circularSliderView.getEndThumbAngle());
 
         circularSliderView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -85,11 +102,6 @@ public class CircularTimerClock extends FrameLayout {
                 circularSliderView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
-
-        circularSliderView.setStartTimeAM(isStartTImeAM);
-        circularSliderView.setEndTimeAM(isEndTimeAM);
-        circularSliderView.updateSliderState(circularSliderView.getStartThumbAngle(), circularSliderView.getEndThumbAngle());
-
         circularSliderView.setOnSliderRangeMovedListener(new CircularSliderView.OnSliderRangeMovedListener() {
             @Override
             public void onStartSliderMoved(double pos, boolean isThumbSlide) {
@@ -148,7 +160,6 @@ public class CircularTimerClock extends FrameLayout {
 
             }
         });
-
 
     }
 
