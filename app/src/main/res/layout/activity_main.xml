@@ -6,12 +6,6 @@
     tools:context=".MainActivity">
 
 
-    <data>
-        <variable
-            name="viewmodel"
-            type="com.softwr.circletimeview.MyViewModel" />
-    </data>
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -23,10 +17,10 @@
         android:layout_gravity="center"
         android:padding="20dp"
         timer:arc_dash_size="30dp"
-        timer:start_minutes="20"
+        timer:start_minutes="30"
         timer:end_minutes="30"
         timer:clock_time_interval="5"
-        timer:clock_tick_interval="15"
+        timer:clock_tick_interval="1"
         timer:clock_hour_color="#0ac2d8"
         timer:clock_tick_color="#0ac2d8"
         timer:hours_size="18sp"
@@ -36,8 +30,8 @@
         timer:border_color="#03A0B9"
         timer:arc_gradient_color_start="#0ac2d8"
         timer:arc_gradient_color_end="#000000"
-        timer:start_thumb_image="@drawable/circle_toggle_shape"
-        timer:end_thumb_image="@drawable/circle_toggle_shape"
+        timer:start_thumb_image="@drawable/start_image"
+        timer:end_thumb_image="@drawable/end_image"
         timer:thumb_size="35dp" >
     </com.softwr.softtimeview.CircularTimerClock>
 

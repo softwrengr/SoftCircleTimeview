@@ -1,5 +1,6 @@
 package com.softwr.softtimeview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -58,25 +59,26 @@ public class ClockView extends View {
 
     private void initClock() {
 
-       Handler handler = new Handler();
-       handler.postDelayed(() -> {
-           height = getHeight();
-           width = getWidth();
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            height = getHeight();
+            width = getWidth();
 
-           cX = width / 2;
-           cY = height / 2;
+            cX = width / 2;
+            cY = height / 2;
 
-           int numeralSpacing = 0;
-           padding = numeralSpacing + 60;
-           int min = Math.min(height, width);
-           radius = min / 2 - padding;
+            int numeralSpacing = 0;
+            padding = numeralSpacing + 60;
+            int min = Math.min(height, width);
+            radius = min / 2 - padding;
 
-           isInit = true;
-           invalidate();
-       },100);
+            isInit = true;
+            invalidate();
+        },100);
 
     }
 
+    @SuppressLint("DrawAllocation")
     @Override
     protected void onDraw(Canvas canvas) {
 
@@ -95,7 +97,7 @@ public class ClockView extends View {
         drawNumeral(canvas);
         paint.reset();
         paint.setColor(tickColor);
-        paint.setStrokeWidth(5);
+        paint.setStrokeWidth(9);
         paint.setStyle(Paint.Style.STROKE);
         paint.setAntiAlias(true);
 
@@ -104,10 +106,11 @@ public class ClockView extends View {
 
             float startX = (float) (cX + (radius + padding) * Math.sin(angle));
             float startY = (float) (cY - (radius + padding) * Math.cos(angle));
-            int pad = 35;
+            int pad = 30;
             if (i % 30 != 0) {
                 pad = 50;
             }
+
 
             float stopX = (float) (cX + ((radius) + pad) * Math.sin(angle));
             float stopY = (float) (cY - ((radius) + pad) * Math.cos(angle));
@@ -119,7 +122,7 @@ public class ClockView extends View {
 
     private void drawNumeral(Canvas canvas) {
         paint.reset();
-        paint.setStrokeWidth(2);
+        paint.setStrokeWidth(3);
         paint.setAntiAlias(true);
         paint.setColor(hourColor);
         paint.setTextSize(fontSize);

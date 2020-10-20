@@ -14,6 +14,7 @@ import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.provider.CalendarContract;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -120,16 +121,22 @@ public class CircularSliderView extends View {
         START, END
     }
 
-    int start , end;
-
-//    public CircularSliderView(Context context, AttributeSet attrs) {
-//        this(context, attrs, 0);
-//    }
+    private final int start;
+    private final int end;
+    float startMin = 0;
+    float endMin = 0;
 
     public CircularSliderView(Context context, AttributeSet attrs, int defStyleAttr, int start, int end) {
-        super(context, attrs, 0);
+        this(context, null,0,0,0,0,0);
+
+    }
+
+    public CircularSliderView(Context context, AttributeSet attrs, int defStyleAttr, int start, int end, float startMin, float endMin) {
+        super(context, attrs, defStyleAttr);
         this.start = start;
         this.end = end;
+        this.startMin = startMin;
+        this.endMin = endMin;
         init(context, attrs, defStyleAttr);
     }
 
@@ -160,19 +167,20 @@ public class CircularSliderView extends View {
         // read all available attributes
         int startHour = a.getInteger(R.styleable.CircularSlider_start_hour, start);
         int endHour = a.getInteger(R.styleable.CircularSlider_end_hour, end);
-        float startMinutes = a.getFloat(R.styleable.CircularSlider_start_minutes, 0);
-        float endMinutes = a.getFloat(R.styleable.CircularSlider_end_minutes, 0);
+        float startMinutes = a.getFloat(R.styleable.CircularSlider_start_minutes, startMin);
+        float endMinutes = a.getFloat(R.styleable.CircularSlider_end_minutes, endMin);
         int thumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_thumb_size, 50);
         int startThumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_start_thumb_size, THUMB_SIZE_NOT_DEFINED);
         int endThumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_end_thumb_size, THUMB_SIZE_NOT_DEFINED);
         int thumbColor = a.getColor(R.styleable.CircularSlider_start_thumb_color, Color.GRAY);
         int thumbEndColor = a.getColor(R.styleable.CircularSlider_end_thumb_color, Color.GRAY);
-        int borderThickness = a.getDimensionPixelSize(R.styleable.CircularSlider_border_thickness, 20);
+        int borderThickness = a.getDimensionPixelSize(R.styleable.CircularSlider_border_thickness, 60);
         int arcDashSize = a.getDimensionPixelSize(R.styleable.CircularSlider_arc_dash_size, 60);
         int arcColor = a.getColor(R.styleable.CircularSlider_arc_color, 0);
         int startGradientColor = a.getColor(R.styleable.CircularSlider_arc_gradient_color_start, 0);
         int endGradientColor = a.getColor(R.styleable.CircularSlider_arc_gradient_color_end, 0);
-        int borderColor = a.getColor(R.styleable.CircularSlider_border_color, Color.RED);
+        int borderColor = a.getColor(R.styleable.CircularSlider_border_color, 0xFF03A0B9);
+
         Drawable thumbImage = a.getDrawable(R.styleable.CircularSlider_start_thumb_image);
         Drawable thumbEndImage = a.getDrawable(R.styleable.CircularSlider_end_thumb_image);
         Drawable backgroundDrawable = a.getDrawable(R.styleable.CircularSlider_clock_background_image);
