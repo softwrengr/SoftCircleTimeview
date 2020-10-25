@@ -124,12 +124,13 @@ public class CircularSliderView extends View {
     }
 
     public CircularSliderView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        this(context, attrs, 0,0,0,0,0);
     }
 
-    public CircularSliderView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CircularSliderView(Context context, AttributeSet attrs, int defStyleAttr,int startHour, int endHour, float startMin, float endMin) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs, defStyleAttr);
+
+        init(context, attrs, defStyleAttr,startHour,endHour,startMin,endMin);
     }
 
     public float getPrevSelectedEndAngle() {
@@ -153,50 +154,46 @@ public class CircularSliderView extends View {
     }
 
     // common initializer method
-    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
+    private void init(Context context, AttributeSet attrs, int defStyleAttr,int startHour, int endHour, float startMin, float endMin) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircularSlider, defStyleAttr, 0);
 
         // read all available attributes
-        int startHour = a.getInteger(R.styleable.CircularSlider_start_hour, 0);
-        int endHour = a.getInteger(R.styleable.CircularSlider_end_hour, 0);
-        float startMinutes = a.getFloat(R.styleable.CircularSlider_start_minutes, 0);
-        float endMinutes = a.getFloat(R.styleable.CircularSlider_end_minutes, 0);
-        int thumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_thumb_size, 50);
+        int thumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_thumb_size, 75);
         int startThumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_start_thumb_size, THUMB_SIZE_NOT_DEFINED);
         int endThumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_end_thumb_size, THUMB_SIZE_NOT_DEFINED);
-        int thumbColor = a.getColor(R.styleable.CircularSlider_start_thumb_color, Color.GRAY);
-        int thumbEndColor = a.getColor(R.styleable.CircularSlider_end_thumb_color, Color.GRAY);
-        int borderThickness = a.getDimensionPixelSize(R.styleable.CircularSlider_border_thickness, 20);
-        int arcDashSize = a.getDimensionPixelSize(R.styleable.CircularSlider_arc_dash_size, 60);
+        int thumbColor = a.getColor(R.styleable.CircularSlider_start_thumb_color, 0x0ac2d8);
+        int thumbEndColor = a.getColor(R.styleable.CircularSlider_end_thumb_color, 0x0ac2d8);
+        int borderThickness = a.getDimensionPixelSize(R.styleable.CircularSlider_border_thickness, 55);
+        int arcDashSize = a.getDimensionPixelSize(R.styleable.CircularSlider_arc_dash_size, 55);
         int arcColor = a.getColor(R.styleable.CircularSlider_arc_color, 0);
         int startGradientColor = a.getColor(R.styleable.CircularSlider_arc_gradient_color_start, 0);
         int endGradientColor = a.getColor(R.styleable.CircularSlider_arc_gradient_color_end, 0);
-        int borderColor = a.getColor(R.styleable.CircularSlider_border_color, Color.RED);
+        int borderColor = a.getColor(R.styleable.CircularSlider_border_color, 0x0ac2d8);
         Drawable thumbImage = a.getDrawable(R.styleable.CircularSlider_start_thumb_image);
         Drawable thumbEndImage = a.getDrawable(R.styleable.CircularSlider_end_thumb_image);
         Drawable backgroundDrawable = a.getDrawable(R.styleable.CircularSlider_clock_background_image);
 
         startHourAngle = hourToHourAngle(startHour);
-        startMinutesAngle = minutesToMinutesAngle(startMinutes);
+        startMinutesAngle = minutesToMinutesAngle(startMin);
         endHourAngle = hourToHourAngle(endHour);
-        endMinutesAngle = minutesToMinutesAngle(endMinutes);
+        endMinutesAngle = minutesToMinutesAngle(endMin);
 
         setStartAngle(startHourAngle + startMinutesAngle);
         setEndAngle(endHourAngle + endMinutesAngle);
 
         setBorderThickness(borderThickness);
-        setBorderColor(borderColor);
+        setBorderColor(getResources().getColor(R.color.gray));
         setThumbSize(thumbSize);
         setStartThumbSize(startThumbSize);
         setEndThumbSize(endThumbSize);
-        setStartThumbImage(thumbImage);
-        setEndThumbImage(thumbEndImage);
+        setStartThumbImage(getResources().getDrawable(R.drawable.small_moon));
+        setEndThumbImage(getResources().getDrawable(R.drawable.small_sun));
         setBackgroundImage(backgroundDrawable);
         setStartThumbColor(thumbColor);
-        setArcColor(arcColor);
+        setArcColor(getResources().getColor(R.color.gray));
         setEndThumbColor(thumbEndColor);
         setArcDashSize(arcDashSize);
-        setArcGradient(startGradientColor, endGradientColor);
+        setArcGradient(getResources().getColor(R.color.one), getResources().getColor(R.color.two));
         setDrawingCacheEnabled(true);
         // assign padding - check for version because of RTL layout compatibility
         int padding;

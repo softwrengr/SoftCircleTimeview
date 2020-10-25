@@ -10,10 +10,6 @@
     <declare-styleable name="CircularSlider">
         <attr name="clock_time_interval" format="integer" />
         <attr name="clock_tick_interval" format="integer" />
-        <attr name="start_hour" format="integer" />
-        <attr name="start_minutes" format="float" />
-        <attr name="end_hour" format="integer" />
-        <attr name="end_minutes" format="float" />
         <attr name="start_time_is_am" format="boolean" />
         <attr name="end_time_is_am" format="boolean" />
         <attr name="is_clock_inside" format="boolean" />

@@ -2,4 +2,11 @@
 <resources>
     <color name="transparent">#00FFFFFF</color>
     <color name="dialer_clock">#0ac2d8</color>
+
+    <color name="color_primary_clock">#0ac2d8</color>
+
+    <color name="gray">#cef8fd</color>
+    <color name="black">#000</color>
+    <color name="one">#0ac2d8</color>
+    <color name="two">#089aaa</color>
 </resources>
