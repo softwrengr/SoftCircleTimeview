@@ -15,8 +15,20 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import java.io.File;
+import java.io.IOException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 public class CircularSliderView extends View {
 
@@ -31,6 +43,9 @@ public class CircularSliderView extends View {
     private int largestCenteredSquareTop;
     private int largestCenteredSquareRight;
     private int largestCenteredSquareBottom;
+
+    private int startMinutes,startHour,endMinutes,endHour ;
+
 
     public void setBackgroundImage(Drawable backgroundImage) {
         this.backgoundImage = backgroundImage;
@@ -97,10 +112,11 @@ public class CircularSliderView extends View {
     private boolean mIsThumbSelected = false;
     private boolean mIsThumbEndSelected = false;
 
-    private Paint mPaint = new Paint();
-    private Paint mLinePaint = new Paint();
-    private RectF arcRectF = new RectF();
-    private Rect arcRect = new Rect();
+    private final Paint mPaint = new Paint();
+    private final Paint mLinePaint = new Paint();
+    private final RectF arcRectF = new RectF();
+    private final Rect arcRect = new Rect();
+
     private OnSliderRangeMovedListener mListener;
     private static final int THUMB_SIZE_NOT_DEFINED = -1;
     private boolean isStartTimeAM = true;
@@ -118,20 +134,28 @@ public class CircularSliderView extends View {
         START, END
     }
 
-    public CircularSliderView(Context context) {
-        this(context, null);
+    public CircularSliderView(Context context, int startHour, int endHour, int startMin, int endMin, int border, int dashSize, Drawable thumbImage, Drawable thumbEndImage) {
+        this(context, null,startHour,endHour,startMin,endMin);
+        this.startHour = startHour;
+        this.endHour = endHour;
+        this.startMinutes = startMin;
+        this.endMinutes = endMin;
+        this.mBorderThickness = border;
+        this.mStartThumbImage = thumbImage;
+        this.mEndThumbImage = thumbEndImage;
 
     }
 
-    public CircularSliderView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0,0,0,0,0);
+    public CircularSliderView(Context context, AttributeSet attrs,int startHour, int endHour, int startMin, int endMin) {
+        this(context, attrs, 0,startHour,endHour,startMin,endMin);
     }
+
 
     public CircularSliderView(Context context, AttributeSet attrs, int defStyleAttr,int startHour, int endHour, float startMin, float endMin) {
         super(context, attrs, defStyleAttr);
-
         init(context, attrs, defStyleAttr,startHour,endHour,startMin,endMin);
     }
+
 
     public float getPrevSelectedEndAngle() {
         return prevSelectedEndAngle;
@@ -157,18 +181,19 @@ public class CircularSliderView extends View {
     private void init(Context context, AttributeSet attrs, int defStyleAttr,int startHour, int endHour, float startMin, float endMin) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircularSlider, defStyleAttr, 0);
 
+
         // read all available attributes
-        int thumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_thumb_size, 75);
+        int thumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_thumb_size, 55);
         int startThumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_start_thumb_size, THUMB_SIZE_NOT_DEFINED);
         int endThumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_end_thumb_size, THUMB_SIZE_NOT_DEFINED);
-        int thumbColor = a.getColor(R.styleable.CircularSlider_start_thumb_color, 0x0ac2d8);
-        int thumbEndColor = a.getColor(R.styleable.CircularSlider_end_thumb_color, 0x0ac2d8);
-        int borderThickness = a.getDimensionPixelSize(R.styleable.CircularSlider_border_thickness, 55);
-        int arcDashSize = a.getDimensionPixelSize(R.styleable.CircularSlider_arc_dash_size, 55);
+        int thumbColor = a.getColor(R.styleable.CircularSlider_start_thumb_color, Color.GRAY);
+        int thumbEndColor = a.getColor(R.styleable.CircularSlider_end_thumb_color, Color.GRAY);
+        int borderThickness = a.getDimensionPixelSize(R.styleable.CircularSlider_border_thickness, 20);
+        int arcDashSize = a.getDimensionPixelSize(R.styleable.CircularSlider_arc_dash_size, 60);
         int arcColor = a.getColor(R.styleable.CircularSlider_arc_color, 0);
         int startGradientColor = a.getColor(R.styleable.CircularSlider_arc_gradient_color_start, 0);
         int endGradientColor = a.getColor(R.styleable.CircularSlider_arc_gradient_color_end, 0);
-        int borderColor = a.getColor(R.styleable.CircularSlider_border_color, 0x0ac2d8);
+        int borderColor = a.getColor(R.styleable.CircularSlider_border_color, Color.RED);
         Drawable thumbImage = a.getDrawable(R.styleable.CircularSlider_start_thumb_image);
         Drawable thumbEndImage = a.getDrawable(R.styleable.CircularSlider_end_thumb_image);
         Drawable backgroundDrawable = a.getDrawable(R.styleable.CircularSlider_clock_background_image);
@@ -186,8 +211,8 @@ public class CircularSliderView extends View {
         setThumbSize(thumbSize);
         setStartThumbSize(startThumbSize);
         setEndThumbSize(endThumbSize);
-        setStartThumbImage(getResources().getDrawable(R.drawable.small_moon));
-        setEndThumbImage(getResources().getDrawable(R.drawable.small_sun));
+        setStartThumbImage(mStartThumbImage);
+        setEndThumbImage(mEndThumbImage);
         setBackgroundImage(backgroundDrawable);
         setStartThumbColor(thumbColor);
         setArcColor(getResources().getColor(R.color.gray));
@@ -221,7 +246,7 @@ public class CircularSliderView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         // use smaller dimension for calculations (depends on parent size)
-        int smallerDim = w > h ? h : w;
+        int smallerDim = Math.min(w, h);
 
         // find circle's rectangle points
         largestCenteredSquareLeft = (w - smallerDim) / 2;

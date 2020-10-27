@@ -10,11 +10,11 @@
 
 
     <com.softwr.softtimeview.CircularTimerClock
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/circular_clock"
         android:layout_gravity="center"
-        timer:arc_dash_size="30dp"
+        timer:arc_dash_size="40dp"
         timer:clock_time_interval="5"
         timer:clock_tick_interval="15"
         android:layout_margin="30dp"
@@ -24,10 +24,10 @@
         timer:start_time_is_am="true"
         timer:end_time_is_am="false"
         timer:is_clock_inside="true"
-        timer:border_thickness="30dp"
-        timer:border_color="#03A0B9"
-        timer:arc_gradient_color_start="#0ac2d8"
-        timer:arc_gradient_color_end="#000000"
+        timer:border_thickness="20dp"
+        timer:border_color="#e7e7e7"
+        timer:arc_gradient_color_start="#78f8b8"
+        timer:arc_gradient_color_end="#00964b"
         timer:start_thumb_image="@drawable/small_moon"
         timer:end_thumb_image="@drawable/small_sun"
         timer:thumb_size="35dp" >

@@ -92,25 +92,24 @@ public class ClockView extends View {
     }
 
     private void drawTickMarks(Canvas canvas) {
-        drawNumeral(canvas);
+
         paint.reset();
         paint.setColor(tickColor);
-        paint.setStrokeWidth(5);
-        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(8);
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setAntiAlias(true);
-
-        for (float i = 0; i < 360; i += 0.5 * tickInterval) {
+        for (float i = 0; i < 360; i += 0.5*tickInterval) {
             float angle = (float) Math.toRadians(i); // Need to convert to radians first
 
-            float startX = (float) (cX + (radius + padding) * Math.sin(angle));
-            float startY = (float) (cY - (radius + padding) * Math.cos(angle));
+            float startX = (float) (cX + (radius+padding) * Math.sin(angle));
+            float startY = (float) (cY - (radius+padding) * Math.cos(angle));
             int pad = 35;
-            if (i % 30 != 0) {
+            if(i%30 != 0){
                 pad = 50;
             }
 
-            float stopX = (float) (cX + ((radius) + pad) * Math.sin(angle));
-            float stopY = (float) (cY - ((radius) + pad) * Math.cos(angle));
+            float stopX = (float) (cX + ((radius)+pad) * Math.sin(angle));
+            float stopY = (float) (cY - ((radius)+pad) * Math.cos(angle));
 
             canvas.drawLine(startX, startY, stopX, stopY, paint);
         }

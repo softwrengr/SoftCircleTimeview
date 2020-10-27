@@ -1,7 +1,9 @@
 package com.softwr.softtimeview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -57,13 +59,14 @@ public class CircularTimerClock extends FrameLayout {
         this(context, attrs, 0);
     }
 
+    @SuppressLint("CustomViewStyleable")
     public CircularTimerClock(@NonNull Context context, @Nullable AttributeSet attrss, @AttrRes int defStyleAttr) {
         super(context, attrss, defStyleAttr);
         this.context = context;
         this.attrs = attrss;
         this.defStyleAttr = defStyleAttr;
 
-        circularSliderView = new CircularSliderView(context,attrss);
+        circularSliderView = new CircularSliderView(context,attrss,0,0,0,0);
         a = context.obtainStyledAttributes(attrss, R.styleable.CircularSlider, defStyleAttr, 0);
         clockView = new ClockView(context, attrss, defStyleAttr);
 
@@ -73,6 +76,9 @@ public class CircularTimerClock extends FrameLayout {
 
     public void init() {
         int borderThickness = a.getDimensionPixelSize(R.styleable.CircularSlider_border_thickness, 20);
+        int thumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_thumb_size, 0);
+        Drawable thumbImage = a.getDrawable(R.styleable.CircularSlider_start_thumb_image);
+        Drawable thumbEndImage = a.getDrawable(R.styleable.CircularSlider_end_thumb_image);
         isStartTImeAM = a.getBoolean(R.styleable.CircularSlider_start_time_is_am,true);
         isEndTimeAM = a.getBoolean(R.styleable.CircularSlider_end_time_is_am,true);
         isClockInside = a.getBoolean(R.styleable.CircularSlider_is_clock_inside,true);
@@ -82,7 +88,7 @@ public class CircularTimerClock extends FrameLayout {
         View layout = LayoutInflater.from(getContext()).inflate(R.layout.circular_timer_clock_layout, this);
         circularSliderWrapper = layout.findViewById(R.id.circular_slider_wrapper);
 
-        circularSliderView = new CircularSliderView(getContext(), attrs, defStyleAttr,startHour,endHour,startMinutes,endMinutes);
+        circularSliderView = new CircularSliderView(getContext(),startHour,endHour,startMinutes,endMinutes,borderThickness,thumbSize,thumbImage,thumbEndImage);
         circularSliderWrapper.addView(circularSliderView);
 
 

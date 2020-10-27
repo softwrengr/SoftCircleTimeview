@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
         CircularTimerClock circularTimerClock = findViewById(R.id.circular_clock);
         circularTimerClock.setStartHour(12);
-        circularTimerClock.setEndHour(9);
+        circularTimerClock.setEndHour(5);
         circularTimerClock.setStartMinutes(0);
         circularTimerClock.setEndMinutes(0);
         circularTimerClock.init();
