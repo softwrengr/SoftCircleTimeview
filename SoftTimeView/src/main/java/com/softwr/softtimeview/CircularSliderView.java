@@ -183,7 +183,7 @@ public class CircularSliderView extends View {
 
 
         // read all available attributes
-        int thumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_thumb_size, 55);
+        int thumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_thumb_size, 85);
         int startThumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_start_thumb_size, THUMB_SIZE_NOT_DEFINED);
         int endThumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_end_thumb_size, THUMB_SIZE_NOT_DEFINED);
         int thumbColor = a.getColor(R.styleable.CircularSlider_start_thumb_color, Color.GRAY);
@@ -259,6 +259,7 @@ public class CircularSliderView extends View {
         mCircleCenterY = largestCenteredSquareBottom / 2 + (h - largestCenteredSquareBottom) / 2;
         mCircleRadius = smallerDim / 2 - mBorderThickness / 2 - mPadding;
 
+        //mCircleRadius = 415;
         // works well for now, should we call something else here?
         super.onSizeChanged(w, h, oldw, oldh);
     }

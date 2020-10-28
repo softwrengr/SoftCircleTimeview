@@ -30,7 +30,7 @@
         timer:arc_gradient_color_end="#00964b"
         timer:start_thumb_image="@drawable/small_moon"
         timer:end_thumb_image="@drawable/small_sun"
-        timer:thumb_size="35dp" >
+        timer:thumb_size="55dp" >
 
     </com.softwr.softtimeview.CircularTimerClock>
 

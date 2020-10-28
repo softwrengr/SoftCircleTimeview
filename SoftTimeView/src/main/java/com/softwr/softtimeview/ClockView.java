@@ -16,7 +16,7 @@ public class ClockView extends View {
     private int height, width = 0;
     private int padding = 0;
     private int radius = 0;
-    private Paint paint;
+    private final Paint paint = new Paint();
     private boolean isInit;
     private int[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
     private Rect rect = new Rect();
@@ -83,7 +83,6 @@ public class ClockView extends View {
         if (!isInit) {
             initClock();
         }
-        paint = new Paint();
         canvas.drawColor(getResources().getColor(R.color.transparent));
         drawNumeral(canvas);
         drawTickMarks(canvas);
@@ -96,7 +95,7 @@ public class ClockView extends View {
         paint.reset();
         paint.setColor(tickColor);
         paint.setStrokeWidth(8);
-        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        paint.setStyle(Paint.Style.STROKE);
         paint.setAntiAlias(true);
         for (float i = 0; i < 360; i += 0.5*tickInterval) {
             float angle = (float) Math.toRadians(i); // Need to convert to radians first
