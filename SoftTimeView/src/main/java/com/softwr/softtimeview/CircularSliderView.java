@@ -183,17 +183,17 @@ public class CircularSliderView extends View {
 
 
         // read all available attributes
-        int thumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_thumb_size, 85);
+        int thumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_thumb_size, 95);
         int startThumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_start_thumb_size, THUMB_SIZE_NOT_DEFINED);
         int endThumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_end_thumb_size, THUMB_SIZE_NOT_DEFINED);
         int thumbColor = a.getColor(R.styleable.CircularSlider_start_thumb_color, Color.GRAY);
         int thumbEndColor = a.getColor(R.styleable.CircularSlider_end_thumb_color, Color.GRAY);
-        int borderThickness = a.getDimensionPixelSize(R.styleable.CircularSlider_border_thickness, 20);
-        int arcDashSize = a.getDimensionPixelSize(R.styleable.CircularSlider_arc_dash_size, 60);
-        int arcColor = a.getColor(R.styleable.CircularSlider_arc_color, 0);
+        int borderThickness = a.getDimensionPixelSize(R.styleable.CircularSlider_border_thickness, 25);
+        int arcDashSize = a.getDimensionPixelSize(R.styleable.CircularSlider_arc_dash_size, 80);
+        int arcColor = a.getColor(R.styleable.CircularSlider_arc_color, getResources().getColor(R.color.gray));
         int startGradientColor = a.getColor(R.styleable.CircularSlider_arc_gradient_color_start, 0);
         int endGradientColor = a.getColor(R.styleable.CircularSlider_arc_gradient_color_end, 0);
-        int borderColor = a.getColor(R.styleable.CircularSlider_border_color, Color.RED);
+        int borderColor = a.getColor(R.styleable.CircularSlider_border_color, getResources().getColor(R.color.gray));
         Drawable thumbImage = a.getDrawable(R.styleable.CircularSlider_start_thumb_image);
         Drawable thumbEndImage = a.getDrawable(R.styleable.CircularSlider_end_thumb_image);
         Drawable backgroundDrawable = a.getDrawable(R.styleable.CircularSlider_clock_background_image);
@@ -207,7 +207,7 @@ public class CircularSliderView extends View {
         setEndAngle(endHourAngle + endMinutesAngle);
 
         setBorderThickness(borderThickness);
-        setBorderColor(getResources().getColor(R.color.gray));
+        setBorderColor(borderColor);
         setThumbSize(thumbSize);
         setStartThumbSize(startThumbSize);
         setEndThumbSize(endThumbSize);
@@ -215,7 +215,7 @@ public class CircularSliderView extends View {
         setEndThumbImage(mEndThumbImage);
         setBackgroundImage(backgroundDrawable);
         setStartThumbColor(thumbColor);
-        setArcColor(getResources().getColor(R.color.gray));
+        setArcColor(arcColor);
         setEndThumbColor(thumbEndColor);
         setArcDashSize(arcDashSize);
         setArcGradient(getResources().getColor(R.color.one), getResources().getColor(R.color.two));
@@ -258,8 +258,8 @@ public class CircularSliderView extends View {
         mCircleCenterX = largestCenteredSquareRight / 2 + (w - largestCenteredSquareRight) / 2;
         mCircleCenterY = largestCenteredSquareBottom / 2 + (h - largestCenteredSquareBottom) / 2;
         mCircleRadius = smallerDim / 2 - mBorderThickness / 2 - mPadding;
+        mCircleRadius = mCircleRadius - 10;
 
-        //mCircleRadius = 415;
         // works well for now, should we call something else here?
         super.onSizeChanged(w, h, oldw, oldh);
     }

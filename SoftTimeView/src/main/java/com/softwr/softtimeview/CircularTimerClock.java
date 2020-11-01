@@ -70,7 +70,6 @@ public class CircularTimerClock extends FrameLayout {
         a = context.obtainStyledAttributes(attrss, R.styleable.CircularSlider, defStyleAttr, 0);
         clockView = new ClockView(context, attrss, defStyleAttr);
 
-
     }
 
 

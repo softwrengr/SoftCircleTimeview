@@ -69,7 +69,7 @@ public class ClockView extends View {
            int numeralSpacing = 0;
            padding = numeralSpacing + 60;
            int min = Math.min(height, width);
-           radius = min / 2 - padding;
+           radius = min / 2 - padding -10;
 
            isInit = true;
            invalidate();

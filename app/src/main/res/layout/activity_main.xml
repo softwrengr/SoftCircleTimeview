@@ -24,7 +24,7 @@
         timer:start_time_is_am="true"
         timer:end_time_is_am="false"
         timer:is_clock_inside="true"
-        timer:border_thickness="20dp"
+        timer:border_thickness="22dp"
         timer:border_color="#e7e7e7"
         timer:arc_gradient_color_start="#78f8b8"
         timer:arc_gradient_color_end="#00964b"
