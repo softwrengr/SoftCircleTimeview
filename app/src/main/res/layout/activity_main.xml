@@ -9,29 +9,59 @@
 
 
 
-    <com.softwr.softtimeview.CircularTimerClock
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/circular_clock"
-        android:layout_gravity="center"
-        timer:arc_dash_size="40dp"
-        timer:clock_time_interval="5"
-        timer:clock_tick_interval="15"
-        android:layout_margin="30dp"
-        timer:clock_hour_color="@color/black"
-        timer:clock_tick_color="@color/black"
-        timer:hours_size="18sp"
-        timer:start_time_is_am="true"
-        timer:end_time_is_am="false"
-        timer:is_clock_inside="true"
-        timer:border_thickness="22dp"
-        timer:border_color="#e7e7e7"
-        timer:arc_gradient_color_start="#78f8b8"
-        timer:arc_gradient_color_end="#00964b"
-        timer:start_thumb_image="@drawable/small_moon"
-        timer:end_thumb_image="@drawable/small_sun"
-        timer:thumb_size="55dp" >
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
 
-    </com.softwr.softtimeview.CircularTimerClock>
+      <com.softwr.softtimeview.CircularTimerClock
+          android:layout_width="300dp"
+          android:layout_height="300dp"
+          android:layout_gravity="center"
+          android:layout_margin="@dimen/standarize_spacing"
+          android:padding="@dimen/medium_margin"
+          timer:clock_time_interval="5"
+          timer:clock_tick_interval="15"
+          timer:clock_hour_color="@color/black"
+          timer:clock_tick_color="@color/black"
+          timer:hours_size="18sp"
+          timer:is_clock_inside="true"
+          timer:border_thickness="30dp"
+          timer:arc_dash_size="32dp"
+          timer:border_color="@color/white"
+          timer:arc_gradient_color_start="@color/white"
+          timer:arc_gradient_color_end="@color/white"
+          timer:thumb_size="5dp" />
+
+      <com.softwr.softtimeview.CircularSliderView
+          android:layout_width="300dp"
+          android:layout_height="300dp"
+          android:id="@+id/circular_clock"
+          android:layout_gravity="center"
+          android:layout_margin="@dimen/standarize_spacing"
+          android:padding="@dimen/medium_margin"
+          timer:start_hour="5"
+          timer:start_minutes="0"
+          timer:end_hour="9"
+          timer:end_minutes="0"
+          timer:clock_time_interval="5"
+          timer:clock_tick_interval="15"
+          timer:clock_hour_color="@color/black"
+          timer:clock_tick_color="@color/black"
+          timer:hours_size="18sp"
+          timer:start_time_is_am="true"
+          timer:end_time_is_am="false"
+          timer:is_clock_inside="true"
+          timer:border_thickness="30dp"
+          timer:arc_dash_size="32dp"
+          timer:border_color="@color/gray"
+          timer:arc_gradient_color_start="@color/blue"
+          timer:arc_gradient_color_end="@color/blue"
+          timer:start_thumb_image="@drawable/small_moon"
+          timer:end_thumb_image="@drawable/small_sun"
+          timer:thumb_size="45dp" >
+
+      </com.softwr.softtimeview.CircularSliderView>
+
+  </FrameLayout>
 
 </LinearLayout>
