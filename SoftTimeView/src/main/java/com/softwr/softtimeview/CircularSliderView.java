@@ -1,5 +1,4 @@
 package com.softwr.softtimeview;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -15,20 +14,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import java.io.File;
-import java.io.IOException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 public class CircularSliderView extends View {
 
@@ -43,9 +30,6 @@ public class CircularSliderView extends View {
     private int largestCenteredSquareTop;
     private int largestCenteredSquareRight;
     private int largestCenteredSquareBottom;
-
-    private int startMinutes,startHour,endMinutes,endHour ;
-
 
     public void setBackgroundImage(Drawable backgroundImage) {
         this.backgoundImage = backgroundImage;
@@ -112,11 +96,10 @@ public class CircularSliderView extends View {
     private boolean mIsThumbSelected = false;
     private boolean mIsThumbEndSelected = false;
 
-    private final Paint mPaint = new Paint();
-    private final Paint mLinePaint = new Paint();
-    private final RectF arcRectF = new RectF();
-    private final Rect arcRect = new Rect();
-
+    private Paint mPaint = new Paint();
+    private Paint mLinePaint = new Paint();
+    private RectF arcRectF = new RectF();
+    private Rect arcRect = new Rect();
     private OnSliderRangeMovedListener mListener;
     private static final int THUMB_SIZE_NOT_DEFINED = -1;
     private boolean isStartTimeAM = true;
@@ -134,28 +117,19 @@ public class CircularSliderView extends View {
         START, END
     }
 
-    public CircularSliderView(Context context, int startHour, int endHour, int startMin, int endMin, int border, int dashSize, Drawable thumbImage, Drawable thumbEndImage) {
-        this(context, null,startHour,endHour,startMin,endMin);
-        this.startHour = startHour;
-        this.endHour = endHour;
-        this.startMinutes = startMin;
-        this.endMinutes = endMin;
-        this.mBorderThickness = border;
-        this.mStartThumbImage = thumbImage;
-        this.mEndThumbImage = thumbEndImage;
+    public CircularSliderView(Context context) {
+        this(context, null);
 
     }
 
-    public CircularSliderView(Context context, AttributeSet attrs,int startHour, int endHour, int startMin, int endMin) {
-        this(context, attrs, 0,startHour,endHour,startMin,endMin);
+    public CircularSliderView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
     }
 
-
-    public CircularSliderView(Context context, AttributeSet attrs, int defStyleAttr,int startHour, int endHour, float startMin, float endMin) {
+    public CircularSliderView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs, defStyleAttr,startHour,endHour,startMin,endMin);
+        init(context, attrs, defStyleAttr);
     }
-
 
     public float getPrevSelectedEndAngle() {
         return prevSelectedEndAngle;
@@ -178,30 +152,33 @@ public class CircularSliderView extends View {
     }
 
     // common initializer method
-    private void init(Context context, AttributeSet attrs, int defStyleAttr,int startHour, int endHour, float startMin, float endMin) {
+    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircularSlider, defStyleAttr, 0);
 
-
         // read all available attributes
-        int thumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_thumb_size, 95);
+        int startHour = a.getInteger(R.styleable.CircularSlider_start_hour, 0);
+        int endHour = a.getInteger(R.styleable.CircularSlider_end_hour, 0);
+        float startMinutes = a.getFloat(R.styleable.CircularSlider_start_minutes, 0);
+        float endMinutes = a.getFloat(R.styleable.CircularSlider_end_minutes, 0);
+        int thumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_thumb_size, 50);
         int startThumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_start_thumb_size, THUMB_SIZE_NOT_DEFINED);
         int endThumbSize = a.getDimensionPixelSize(R.styleable.CircularSlider_end_thumb_size, THUMB_SIZE_NOT_DEFINED);
         int thumbColor = a.getColor(R.styleable.CircularSlider_start_thumb_color, Color.GRAY);
         int thumbEndColor = a.getColor(R.styleable.CircularSlider_end_thumb_color, Color.GRAY);
-        int borderThickness = a.getDimensionPixelSize(R.styleable.CircularSlider_border_thickness, 25);
-        int arcDashSize = a.getDimensionPixelSize(R.styleable.CircularSlider_arc_dash_size, 80);
-        int arcColor = a.getColor(R.styleable.CircularSlider_arc_color, getResources().getColor(R.color.gray));
+        int borderThickness = a.getDimensionPixelSize(R.styleable.CircularSlider_border_thickness, 20);
+        int arcDashSize = a.getDimensionPixelSize(R.styleable.CircularSlider_arc_dash_size, 60);
+        int arcColor = a.getColor(R.styleable.CircularSlider_arc_color, 0);
         int startGradientColor = a.getColor(R.styleable.CircularSlider_arc_gradient_color_start, 0);
         int endGradientColor = a.getColor(R.styleable.CircularSlider_arc_gradient_color_end, 0);
-        int borderColor = a.getColor(R.styleable.CircularSlider_border_color, getResources().getColor(R.color.gray));
+        int borderColor = a.getColor(R.styleable.CircularSlider_border_color, Color.RED);
         Drawable thumbImage = a.getDrawable(R.styleable.CircularSlider_start_thumb_image);
         Drawable thumbEndImage = a.getDrawable(R.styleable.CircularSlider_end_thumb_image);
         Drawable backgroundDrawable = a.getDrawable(R.styleable.CircularSlider_clock_background_image);
 
         startHourAngle = hourToHourAngle(startHour);
-        startMinutesAngle = minutesToMinutesAngle(startMin);
+        startMinutesAngle = minutesToMinutesAngle(startMinutes);
         endHourAngle = hourToHourAngle(endHour);
-        endMinutesAngle = minutesToMinutesAngle(endMin);
+        endMinutesAngle = minutesToMinutesAngle(endMinutes);
 
         setStartAngle(startHourAngle + startMinutesAngle);
         setEndAngle(endHourAngle + endMinutesAngle);
@@ -211,14 +188,14 @@ public class CircularSliderView extends View {
         setThumbSize(thumbSize);
         setStartThumbSize(startThumbSize);
         setEndThumbSize(endThumbSize);
-        setStartThumbImage(mStartThumbImage);
-        setEndThumbImage(mEndThumbImage);
+        setStartThumbImage(thumbImage);
+        setEndThumbImage(thumbEndImage);
         setBackgroundImage(backgroundDrawable);
         setStartThumbColor(thumbColor);
         setArcColor(arcColor);
         setEndThumbColor(thumbEndColor);
         setArcDashSize(arcDashSize);
-        setArcGradient(getResources().getColor(R.color.one), getResources().getColor(R.color.two));
+        setArcGradient(startGradientColor, endGradientColor);
         setDrawingCacheEnabled(true);
         // assign padding - check for version because of RTL layout compatibility
         int padding;
@@ -246,7 +223,7 @@ public class CircularSliderView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         // use smaller dimension for calculations (depends on parent size)
-        int smallerDim = Math.min(w, h);
+        int smallerDim = w > h ? h : w;
 
         // find circle's rectangle points
         largestCenteredSquareLeft = (w - smallerDim) / 2;
@@ -258,7 +235,6 @@ public class CircularSliderView extends View {
         mCircleCenterX = largestCenteredSquareRight / 2 + (w - largestCenteredSquareRight) / 2;
         mCircleCenterY = largestCenteredSquareBottom / 2 + (h - largestCenteredSquareBottom) / 2;
         mCircleRadius = smallerDim / 2 - mBorderThickness / 2 - mPadding;
-        mCircleRadius = mCircleRadius - 10;
 
         // works well for now, should we call something else here?
         super.onSizeChanged(w, h, oldw, oldh);
@@ -364,6 +340,7 @@ public class CircularSliderView extends View {
     private void updateSliderState(int touchX, int touchY, Thumb thumb) {
         int distanceX = touchX - mCircleCenterX;
         int distanceY = mCircleCenterY - touchY;
+        //noinspection SuspiciousNameCombination
         double c = Math.sqrt(Math.pow(distanceX, 2) + Math.pow(distanceY, 2));
         double angle = Math.acos(distanceX / c);
         if (distanceY < 0)
@@ -429,6 +406,7 @@ public class CircularSliderView extends View {
     }
 
     @Override
+    @SuppressWarnings("NullableProblems")
     public boolean onTouchEvent(MotionEvent ev) {
 
         switch (ev.getAction()) {

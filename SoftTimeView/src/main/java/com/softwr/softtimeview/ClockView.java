@@ -18,23 +18,24 @@ public class ClockView extends View {
     private int radius = 0;
     private final Paint paint = new Paint();
     private boolean isInit;
-    private int[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+    private int[] numbers = {1,2,3,4,5,6,7,8,9,10,11,12};
     private Rect rect = new Rect();
-    double cX = getX() + getWidth() / 2;
+    double cX = getX()+getWidth()/2;
 
-    double cY = getY() + getHeight() / 2;
+    double cY = getY()+getHeight()/2;
     private int tickColor;
     private int hourColor;
     private int fontSize = 0;
     private int tickInterval;
 
+
     public ClockView(Context context) {
-        this(context, null);
+        this(context,null);
 
     }
 
     public ClockView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        this(context,attrs,0);
     }
 
     public ClockView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -79,22 +80,21 @@ public class ClockView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-
         if (!isInit) {
             initClock();
         }
         canvas.drawColor(getResources().getColor(R.color.transparent));
         drawNumeral(canvas);
         drawTickMarks(canvas);
-        super.onDraw(canvas);
 
+        super.onDraw(canvas);
     }
 
     private void drawTickMarks(Canvas canvas) {
 
         paint.reset();
         paint.setColor(tickColor);
-        paint.setStrokeWidth(8);
+        paint.setStrokeWidth(5);
         paint.setStyle(Paint.Style.STROKE);
         paint.setAntiAlias(true);
         for (float i = 0; i < 360; i += 0.5*tickInterval) {
@@ -114,6 +114,7 @@ public class ClockView extends View {
         }
 
     }
+
 
     private void drawNumeral(Canvas canvas) {
         paint.reset();
@@ -143,8 +144,6 @@ public class ClockView extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int height = MeasureSpec.getSize(heightMeasureSpec);
-        int width = MeasureSpec.getSize(widthMeasureSpec);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
